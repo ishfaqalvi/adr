@@ -1,0 +1,5 @@
+    <div class="form-group col-lg-6 mb-3">
+        {{ Form::label('{{column}}') }}
+        {{ Form::text('{{column}}', ${{modelNameLowerCase}}->{{column}}, ['class' => 'form-control' . ($errors->has('{{column}}') ? ' is-invalid' : ''), 'placeholder' => '{{title}}','required']) }}
+        {!! $errors->first('{{column}}', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
