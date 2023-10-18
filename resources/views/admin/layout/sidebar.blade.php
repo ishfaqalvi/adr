@@ -31,7 +31,7 @@
     </a>
 </li>
 @endcan
-@canany(['consignees-list', 'chemicals-list'])
+@canany(['consignees-list', 'chemicals-list','invoices-list'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Main Features</div>
     <i class="ph-dots-three sidebar-resize-show"></i>
@@ -50,6 +50,14 @@
     <a class="nav-link {{ request()->routeIs('chemicals*') ? 'active' : ''}}" href="{{ route('chemicals.index') }}">
         <i class="ph-atom"></i>
         <span>Chemicals</span>
+    </a>
+</li>
+@endcan
+@can('invoices-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('invoices*') ? 'active' : ''}}" href="{{ route('invoices.index') }}">
+        <i class="ph-notepad"></i>
+        <span>Invoices</span>
     </a>
 </li>
 @endcan

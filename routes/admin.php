@@ -68,6 +68,21 @@ Route::controller(ChemicalController::class)->prefix('chemicals')->as('chemicals
 
 /*
 |--------------------------------------------------------------------------
+| Invoices Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(InvoiceController::class)->prefix('invoices')->as('invoices.')->group(function () {
+	Route::get('list',				'index'			)->name('index'		   );
+	Route::get('create',			'create'		)->name('create'	   );
+	Route::post('store',			'store'			)->name('store'		   );
+	Route::get('edit/{id}',			'edit'			)->name('edit'		   );
+	Route::get('show/{id}',			'show'			)->name('show'		   );
+	Route::patch('update/{user}',	'update'		)->name('update'	   );
+	Route::delete('delete/{id}',	'destroy'		)->name('destroy'	   );
+});
+
+/*
+|--------------------------------------------------------------------------
 | Notifications Routes
 |--------------------------------------------------------------------------
 */

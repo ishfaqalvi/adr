@@ -62,4 +62,18 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group
         Route::get('list',              'index'  );
         Route::get('show/{id}',         'show'   );
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Invoices Route
+    |--------------------------------------------------------------------------
+    */
+    Route::controller(InvoiceController::class)->prefix('invoices')->group(function () {
+        Route::get('list',                'index'     );
+        Route::get('show/{id}',           'show'      );
+        Route::post('store',              'store'     );
+        Route::patch('update/{invoice}',  'update'    );
+        Route::delete('delete/{id}',      'destroy'   );
+        Route::get('check-limit',         'checkLimit');
+    });
 });

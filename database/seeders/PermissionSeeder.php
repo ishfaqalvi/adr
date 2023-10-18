@@ -40,6 +40,12 @@ class PermissionSeeder extends Seeder
                   'chemicals-edit', 
                   'chemicals-delete',
 
+                  'invoices-list', 
+                  'invoices-view', 
+                  'invoices-create', 
+                  'invoices-edit', 
+                  'invoices-delete',
+
                   'notifications-list', 
                   'notifications-view', 
                   'notifications-create', 
