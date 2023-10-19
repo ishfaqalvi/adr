@@ -20,7 +20,22 @@ class InvoiceController extends BaseController
      */
     public function index()
     {
-        $invoices = Invoice::own()->with('consignee','user')->get();
+        $data = array();
+        $currentY = now()->year;
+        $serial = 0;
+        $invoices = Invoice::own()->with('consignee','user')->withCount('invoiceItems')->get();
+        foreach($invoices as $invoice)
+        {
+            $year = date('Y', $invoice->invoice_date);
+            if ($currentY != $year) {
+                $currentY = $year;
+                $serial = 1;
+            }else{
+                ++$serial;  
+            }
+            $invoice->record_number = $serial.'/'. $currentY;
+            $data[] = $invoice;
+        }
         return $this->sendResponse($invoices, 'Invoice list get successfully.');
     }
 
@@ -123,18 +138,12 @@ class InvoiceController extends BaseController
      */
     public function checkLimit()
     {
-        $month   = now()->month;
-        $year    = now()->year;
-        $invoices= auth()->user()->invoices();
+        $bulk['month']= Invoice::ownBulk()->monthly()->count();
+
+        $bulk['year'] = Invoice::ownBulk()->yearly()->count();
         
-        $monthly= $invoices->whereRaw("MONTH(FROM_UNIXTIME(invoice_date)) = ?", [$month]);
-        $yearly = $invoices->whereRaw("YEAR(FROM_UNIXTIME(invoice_date)) = ?", [$year]);
-        
-        $bulk['month']= $monthly->where('shipment_type','Bulk')->count();
-        $bulk['year'] = $yearly->where('shipment_type','Bulk')->count();
-        
-        $other['month']= $monthly->where('shipment_type','1136')->count();
-        $other['year'] = $yearly->where('shipment_type','1136')->count(); 
+        $other['month']= Invoice::ownOther()->monthly()->count();
+        $other['year'] = Invoice::ownOther()->yearly()->count(); 
 
         return $this->sendResponse(['bulk' => $bulk, '1136' => $other], 'Invoice limit get successfully.');
     }
