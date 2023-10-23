@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('consignee_id')->constrained('consignees');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('consignee_id')->constrained('consignees')->onDelete('cascade');
             $table->string('shipment_type');
             $table->bigInteger('invoice_date');
             $table->string('file')->nullable();

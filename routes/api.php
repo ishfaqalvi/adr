@@ -36,9 +36,10 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group
     |--------------------------------------------------------------------------
     */
     Route::controller(AuthController::class)->prefix('auth')->group(function () {
-        Route::get('view',          'view'     );
-        Route::post('update',       'update'   );
-        Route::get('logout',        'logout'   );
+        Route::get('view',              'view'   );
+        Route::post('update',           'update' );
+        Route::get('logout',            'logout' );
+        Route::delete('delete/{id}',    'destroy');
     });
 
     /*

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invoice_id')->constrained('invoices');
-            $table->foreignId('chemical_id')->constrained('chemicals');
+            $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
+            $table->foreignId('chemical_id')->constrained('chemicals')->onDelete('cascade');
             $table->integer('point');
             $table->integer('quantity');
             $table->timestamps();

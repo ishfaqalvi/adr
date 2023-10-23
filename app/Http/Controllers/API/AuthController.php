@@ -166,6 +166,19 @@ class AuthController extends BaseController
     }
 
     /**
+     * Remove account api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->tokens()->delete();
+        $user->delete();
+        return $this->sendResponse('', 'Your account removed successfully.');
+    }
+
+    /**
      * Validate a resource.
      *
      * @return \Illuminate\Http\Response
