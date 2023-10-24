@@ -24,6 +24,7 @@ Route::namespace('App\Http\Controllers\API')->group(function() {
         Route::post('register',         'register'  );
         Route::post('login',            'login'     );
         Route::post('forgot_password',  'forgotPass');
+        Route::post('verify_otp',       'verifiOtp' );
         Route::post('reset_password',   'resetPass' );
         Route::post('check_user',       'checkUser' );
     });

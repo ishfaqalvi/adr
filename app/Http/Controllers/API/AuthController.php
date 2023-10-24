@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\OTPMail;
@@ -121,10 +122,36 @@ class AuthController extends BaseController
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
             }
-            $otp = rand(100000, 999999);  // Generate a random 6-digit number.
+            $otp = rand(100000, 999999);
             Mail::to($request->email)->send(new OTPMail($otp));
-            $data = ['otp' => $otp, 'email' => $request->email];
-            return $this->sendResponse($data, 'Reset password OTP send to given email successfully.');
+            Session::put($request->email, $otp);
+            return $this->sendResponse('', 'Reset password OTP send to given email successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
+
+    /**
+     * Verify otp api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function verifiOtp(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|exists:users',
+                'otp'   => 'required',
+            ]);
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+            $savedOTP = Session::get($request->email);
+
+            if ($savedOTP && $savedOTP == $request->otp) {
+                return $this->sendResponse('', 'OTP Verified successfully.');    
+            }
+            return $this->sendResponse('', 'OTP Not Verified.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -148,6 +175,7 @@ class AuthController extends BaseController
             }
             $user = User::where('email', $request->email)->first();
             $user->update(['password' => $request->new_password]);
+            Session::forget($request->email);
             return $this->sendResponse('', 'Your password reset successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -190,7 +218,7 @@ class AuthController extends BaseController
             $user = User::where('email', $email)->first();    
         }
         if (empty($user)) {
-            return $this->sendError('Record Not Found.', ['Against this parameter no record found!']);
+            return $this->sendError('Record Not Found.', ['No record found against this email!']);
         }else{
             return $this->sendResponse($user, 'User data get successfully.');
         }
