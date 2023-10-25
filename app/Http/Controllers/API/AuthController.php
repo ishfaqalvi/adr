@@ -4,10 +4,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController;
 
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\OTPMail;
+use App\Models\Token;
 use App\Models\User;
 use Auth;
 
@@ -124,7 +124,7 @@ class AuthController extends BaseController
             }
             $otp = rand(100000, 999999);
             Mail::to($request->email)->send(new OTPMail($otp));
-            Session::put($request->email, $otp);
+            Token::updateOrCreate(['email' => $request->email], ['otp' => $otp]);
             return $this->sendResponse('', 'Reset password OTP send to given email successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -146,12 +146,13 @@ class AuthController extends BaseController
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
             }
-            $savedOTP = Session::get($request->email);
-
+            $savedOTP = Token::where('email',$request->email)->first()->otp;
+            $data = false;
             if ($savedOTP && $savedOTP == $request->otp) {
-                return $this->sendResponse('', 'OTP Verified successfully.');    
+                $data = true;
+                return $this->sendResponse($data, 'OTP Verified successfully.');    
             }
-            return $this->sendResponse('', 'OTP Not Verified.');
+            return $this->sendResponse($data, 'OTP Not Verified.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -175,7 +176,7 @@ class AuthController extends BaseController
             }
             $user = User::where('email', $request->email)->first();
             $user->update(['password' => $request->new_password]);
-            Session::forget($request->email);
+            Token::where('email',$request->email)->first()->delete();
             return $this->sendResponse('', 'Your password reset successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
