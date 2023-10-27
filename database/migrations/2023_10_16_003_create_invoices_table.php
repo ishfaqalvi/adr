@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('consignee_id')->constrained('consignees')->onDelete('cascade');
             $table->string('shipment_type');
+            $table->string('sub_type')->nullable();
             $table->bigInteger('invoice_date');
             $table->string('file')->nullable();
             $table->string('total_points');

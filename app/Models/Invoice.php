@@ -38,6 +38,7 @@ class Invoice extends Model implements Auditable
         'user_id',
         'consignee_id',
         'shipment_type',
+        'sub_type',
         'invoice_date',
         'file',
         'total_points',
