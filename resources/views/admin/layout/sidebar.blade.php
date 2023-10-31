@@ -31,12 +31,20 @@
     </a>
 </li>
 @endcan
-@canany(['consignees-list', 'chemicals-list','invoices-list'])
+@canany(['packagings-list', 'consignees-list', 'chemicals-list','invoices-list'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Main Features</div>
     <i class="ph-dots-three sidebar-resize-show"></i>
 </li>
 @endcanany
+@can('packagings-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('packagings*') ? 'active' : ''}}" href="{{ route('packagings.index') }}">
+        <i class="ph-tote"></i>
+        <span>Packagings</span>
+    </a>
+</li>
+@endcan
 @can('consignees-list')
 <li class="nav-item">
     <a class="nav-link {{ request()->routeIs('consignees*') ? 'active' : ''}}" href="{{ route('consignees.index') }}">

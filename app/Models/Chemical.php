@@ -115,6 +115,16 @@ class Chemical extends Model
     }
 
     /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getLabelAttribute($value)
+    {
+    	return str_replace(' ', '+', $value);
+    }
+
+    /**
      * Scope model query.
      *
      * @var array

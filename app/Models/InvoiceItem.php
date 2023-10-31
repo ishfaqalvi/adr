@@ -34,8 +34,16 @@ class InvoiceItem extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['invoice_id','chemical_id','point','quantity'];
+    protected $fillable = ['invoice_id','chemical_id','packaging_id','point','quantity'];
 
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function packaging()
+    {
+        return $this->hasOne('App\Models\Packaging', 'id', 'packaging_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

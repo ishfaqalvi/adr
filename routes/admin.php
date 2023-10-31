@@ -38,17 +38,32 @@ Route::controller(UserController::class)->prefix('users')->as('users.')->group(f
 
 /*
 |--------------------------------------------------------------------------
+| Packagings Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(PackagingController::class)->prefix('packagings')->as('packagings.')->group(function () {
+	Route::get('list',					'index'	 )->name('index'	);
+	Route::get('create',				'create' )->name('create'	);
+	Route::post('store',				'store'	 )->name('store'	);
+	Route::get('edit/{id}',				'edit'	 )->name('edit'		);
+	Route::get('show/{id}',				'show'	 )->name('show'		);
+	Route::patch('update/{packaging}',	'update' )->name('update'	);
+	Route::delete('delete/{id}',		'destroy')->name('destroy'	);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Consignees Routes
 |--------------------------------------------------------------------------
 */
 Route::controller(ConsigneeController::class)->prefix('consignees')->as('consignees.')->group(function () {
-	Route::get('list',				'index'			)->name('index'		   );
-	Route::get('create',			'create'		)->name('create'	   );
-	Route::post('store',			'store'			)->name('store'		   );
-	Route::get('edit/{id}',			'edit'			)->name('edit'		   );
-	Route::get('show/{id}',			'show'			)->name('show'		   );
-	Route::patch('update/{user}',	'update'		)->name('update'	   );
-	Route::delete('delete/{id}',	'destroy'		)->name('destroy'	   );
+	Route::get('list',					'index'		)->name('index'	 );
+	Route::get('create',				'create'	)->name('create' );
+	Route::post('store',				'store'		)->name('store'	 );
+	Route::get('edit/{id}',				'edit'		)->name('edit'	 );
+	Route::get('show/{id}',				'show'		)->name('show'	 );
+	Route::patch('update/{consignee}',	'update'	)->name('update' );
+	Route::delete('delete/{id}',		'destroy'	)->name('destroy');
 });
 
 /*

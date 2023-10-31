@@ -31,6 +31,12 @@ class AuthController extends BaseController
                 return $this->sendError('Validation Error.', $validator->errors());
             }
             $user = User::create($request->all());
+            $data = [
+                ['name' => 'Box', 'default' => 1],
+                ['name' => 'Tank','default' => 1],
+                ['name' => 'Drum','default' => 1]
+            ];
+            $user->packagings()->createMany($data);
             return $this->sendResponse($user, 'Your account has been created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

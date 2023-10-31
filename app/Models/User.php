@@ -84,6 +84,14 @@ class User extends Authenticatable implements Auditable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function packagings()
+    {
+        return $this->hasMany('App\Models\Packaging', 'user_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function consignees()
     {
         return $this->hasMany('App\Models\Consignee', 'user_id', 'id');

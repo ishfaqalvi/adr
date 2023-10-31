@@ -45,6 +45,18 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group
 
     /*
     |--------------------------------------------------------------------------
+    | Packagings Route
+    |--------------------------------------------------------------------------
+    */
+    Route::controller(PackagingController::class)->prefix('packagings')->group(function () {
+        Route::get('list',                  'index'  );
+        Route::post('store',                'store'  );
+        Route::patch('update/{packaging}',  'update' );
+        Route::delete('delete/{id}',        'destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
     | Cosignees Route
     |--------------------------------------------------------------------------
     */

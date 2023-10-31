@@ -55,6 +55,7 @@ class InvoiceController extends BaseController
                 'total_points'       => 'required',
                 'items'              => 'required|array',
                 'items.*.chemical_id'=> 'required|integer',
+                'items.*.packaging_id'=> 'required|integer',
                 'items.*.point'      => 'required|integer',
                 'items.*.quantity'   => 'required|numeric'
             ]);
@@ -79,7 +80,7 @@ class InvoiceController extends BaseController
      */
     public function show($id)
     {
-        $invoice = Invoice::with('consignee','user','invoiceItems.chemical')->find($id);
+       $invoice = Invoice::with('consignee','user','invoiceItems.packaging','invoiceItems.chemical')->find($id);
 
         return $this->sendResponse($invoice, 'Invoice detail get successfully.');
     }
@@ -101,6 +102,7 @@ class InvoiceController extends BaseController
                 'total_points'       => 'required',
                 'items'              => 'required|array',
                 'items.*.chemical_id'=> 'required|integer',
+                'items.*.packaging_id'=> 'required|integer',
                 'items.*.point'      => 'required|integer',
                 'items.*.quantity'   => 'required|numeric'
             ]);

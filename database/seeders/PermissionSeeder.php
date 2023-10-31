@@ -28,6 +28,12 @@ class PermissionSeeder extends Seeder
                   'users-edit', 
                   'users-delete',
 
+                  'packagings-list', 
+                  'packagings-view', 
+                  'packagings-create', 
+                  'packagings-edit', 
+                  'packagings-delete',
+
                   'consignees-list', 
                   'consignees-view', 
                   'consignees-create', 
