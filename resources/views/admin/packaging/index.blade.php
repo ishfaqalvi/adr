@@ -37,7 +37,8 @@
                 <tr>
                     <th>No</th>
                     <th>User</th>
-					<th>Name</th>
+					<th>Name En</th>
+                    <th>Name It</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -46,7 +47,8 @@
                 <tr>
                     <td>{{ ++$key }}</td>
 					<td>{{ $packaging->user->name }}</td>
-					<td>{{ $packaging->name }}</td>
+					<td>{{ $packaging->name_en }}</td>
+                    <td>{{ $packaging->name_it }}</td>
                     <td class="text-center">@include('admin.packaging.actions')</td>
                 </tr>
             @endforeach
