@@ -27,7 +27,7 @@ class Packaging extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['user_id','name','default'];
+    protected $fillable = ['user_id','name_en','name_it','default'];
 
 
     /**
@@ -45,6 +45,6 @@ class Packaging extends Model implements Auditable
      */
     public function scopeOwn($query)
     {
-        return $query->where('user_id', auth()->user()->id);
+        return $query->whereIn('user_id', [1,auth()->user()->id]);
     }
 }

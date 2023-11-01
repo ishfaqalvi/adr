@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('packagings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('name');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->nullable();
+            $table->string('name_en');
+            $table->string('name_it');
             $table->integer('default')->default(0);
             $table->timestamps();
         });

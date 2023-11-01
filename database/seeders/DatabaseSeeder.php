@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AdminUserSeeder::class);
         $this->call(SettingsSeeder::class);
         $this->call(ChemicalSeeder::class);
+        $this->call(PackagingSeeder::class);
     }
 }

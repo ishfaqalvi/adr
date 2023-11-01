@@ -35,7 +35,8 @@ class PackagingController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:50'
+                'name_en' => 'required|string|max:50',
+                'name_it' => 'required|string|max:50'
             ]);
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
@@ -58,7 +59,8 @@ class PackagingController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:50'
+                'name_en' => 'required|string|max:50',
+                'name_it' => 'required|string|max:50'
             ]);
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());

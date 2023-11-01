@@ -55,7 +55,7 @@ class InvoiceController extends BaseController
                 'total_points'       => 'required',
                 'items'              => 'required|array',
                 'items.*.chemical_id'=> 'required|integer',
-                'items.*.packaging_id'=> 'required|integer',
+                'items.*.packaging_id'=> 'nullable|integer',
                 'items.*.point'      => 'required|integer',
                 'items.*.quantity'   => 'required|numeric'
             ]);
@@ -102,7 +102,7 @@ class InvoiceController extends BaseController
                 'total_points'       => 'required',
                 'items'              => 'required|array',
                 'items.*.chemical_id'=> 'required|integer',
-                'items.*.packaging_id'=> 'required|integer',
+                'items.*.packaging_id'=> 'nullable|integer',
                 'items.*.point'      => 'required|integer',
                 'items.*.quantity'   => 'required|numeric'
             ]);
