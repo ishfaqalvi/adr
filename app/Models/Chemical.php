@@ -103,15 +103,25 @@ class Chemical extends Model
     ];
 
     /**
+     * The set attributes.
+     *
+     * @var array
+     */
+    public function setUnNumberAttribute($number)
+    {
+        $this->attributes['un_number'] = str_pad($number, 4, '0', STR_PAD_LEFT);
+    }
+
+    /**
      * The get attributes.
      *
      * @var array
      */
     public function getUnNumberAttribute($number)
     {
-    	if (isset($number)) {
-    		return 'UN'.$number;
-    	}
+        if (isset($number)) {
+            return 'UN'.$number;
+        }
     }
 
     /**

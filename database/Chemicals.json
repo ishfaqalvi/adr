@@ -74854,7 +74854,7 @@
         "hazard_identification_no": ""
     },
     {
-        "name_it": "\"PRODOTTO CHIMICO SOTTO PRESSIONE, INFIAMMABILE,TOSSICO, N.A.S.",
+        "name_it": "PRODOTTO CHIMICO SOTTO PRESSIONE, INFIAMMABILE,TOSSICO, N.A.S.",
         "un_number": "3504",
         "name_en": "",
         "class": "2",
@@ -74880,9 +74880,9 @@
         "hazard_identification_no": ""
     },
     {
-        "name_it": "2881",
-        "un_number": "PRODOTTO CHIMICO SOTTO PRESSIONE, INFIAMMABILE, CORROSIVO, N.A.S.\"",
-        "name_en": "3505",
+        "name_it": "PRODOTTO CHIMICO SOTTO PRESSIONE, INFIAMMABILE, CORROSIVO, N.A.S.",
+        "un_number": "3505",
+        "name_en": "",
         "class": "",
         "classification_code": "2",
         "packing_group": "8FC",
