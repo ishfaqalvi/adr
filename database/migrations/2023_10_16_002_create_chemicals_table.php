@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('chemicals', function (Blueprint $table) {
             $table->id();
-            $table->string('un_number');
-            $table->text('name_en');
-            $table->text('name_it');
+            $table->string('un_number')->nullable();
+            $table->text('name_en')->nullable();
+            $table->text('name_it')->nullable();
             $table->string('class')->nullable();
             $table->string('classification_code')->nullable();
             $table->string('packing_group')->nullable();

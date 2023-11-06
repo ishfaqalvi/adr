@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
             $table->foreignId('chemical_id')->constrained('chemicals')->onDelete('cascade');
-            $table->foreignId('packaging_id')->constrained('packagings')->onDelete('cascade')->nullable();
+            $table->integer('packaging_id')->nullable();
             $table->integer('point');
             $table->integer('quantity');
             $table->timestamps();

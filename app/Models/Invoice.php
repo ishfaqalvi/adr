@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 
 /**
  * Class Invoice
@@ -87,6 +88,27 @@ class Invoice extends Model implements Auditable
     public function scopeOwn($query)
     {
         return $query->where('user_id', auth()->user()->id);
+    }
+
+    /**
+     * Scope model query.
+     *
+     * @var array
+     */
+    public function scopeFilter($query, $request)
+    {
+        if(isset($request['year']))
+        {
+            $year = $request['year'];
+            $startOfYear = Carbon::createFromDate($year)->startOfYear()->timestamp;
+            $endOfYear = Carbon::createFromDate($year)->endOfYear()->timestamp;
+            $query->whereBetween('invoice_date', [$startOfYear, $endOfYear]);
+        }
+        elseif(isset($request['shipment_type']))
+        {
+            $query->where('shipment_type', $request['shipment_type']);
+        }
+        return $query;
     }
 
     /**

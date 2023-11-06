@@ -18,12 +18,12 @@ class InvoiceController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = array();
         $currentY = now()->year;
         $serial = 0;
-        $invoices = Invoice::own()->with('consignee','user')->withCount('invoiceItems')->get();
+        $invoices = Invoice::filter($request->all())->own()->with('consignee','user','invoiceItems.packaging','invoiceItems.chemical')->withCount('invoiceItems')->get();
         foreach($invoices as $invoice)
         {
             $year = date('Y', $invoice->invoice_date);
