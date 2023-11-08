@@ -21,19 +21,31 @@ class InvoiceController extends BaseController
     public function index(Request $request)
     {
         $data = array();
-        $currentY = now()->year;
-        $serial = 0;
+        $bulkcurrentY = now()->year;
+        $bulkserial = 0;
+        $othercurrentY = now()->year;
+        $otherserial = 0;
         $invoices = Invoice::filter($request->all())->own()->with('consignee','user','invoiceItems.packaging','invoiceItems.chemical')->withCount('invoiceItems')->get();
         foreach($invoices as $invoice)
         {
             $year = date('Y', $invoice->invoice_date);
-            if ($currentY != $year) {
-                $currentY = $year;
-                $serial = 1;
+            if ($invoice->shipment_type == 'Bulk') {
+                if ($bulkcurrentY != $year) {
+                    $bulkcurrentY = $year;
+                    $bulkserial = 1;
+                }else{
+                    ++$bulkserial;  
+                }
+                $invoice->record_number = $bulkserial.'/'. $bulkcurrentY;   
             }else{
-                ++$serial;  
+                if ($othercurrentY != $year) {
+                    $othercurrentY = $year;
+                    $otherserial = 1;
+                }else{
+                    ++$otherserial;  
+                }
+                $invoice->record_number = $otherserial.'/'. $othercurrentY;
             }
-            $invoice->record_number = $serial.'/'. $currentY;
             $data[] = $invoice;
         }
         return $this->sendResponse($invoices, 'Invoice list get successfully.');
