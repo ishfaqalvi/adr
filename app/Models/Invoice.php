@@ -61,24 +61,26 @@ class Invoice extends Model implements Auditable
      */
     public function setFileAttribute($file)
     {
-        if($file) {
-            $name = $file->getClientOriginalName();
-            $file->move('upload/images/invoice', $name);
-            $this->attributes['file'] = 'upload/images/invoice/'.$name;
-        }else{
+        if ($value instanceof \Illuminate\Http\UploadedFile) {
+            $name = $value->getClientOriginalName();
+            $value->move(public_path('upload/images/invoice'), $name);
+            $this->attributes['file'] = public_path('upload/images/invoice/' . $name);
+        } elseif (is_string($value)) {
+            $this->attributes['file'] = $value;
+        } else {
             unset($this->attributes['file']);
         }
     }
 
-    /**
-     * Get the attachment's.
-     * @param  string  $value
-     * @return void
-     */
-    public function getFileAttribute($file)
-    {
-        if($file) { return asset($file); }
-    }
+    // /**
+    //  * Get the attachment's.
+    //  * @param  string  $value
+    //  * @return void
+    //  */
+    // public function getFileAttribute($file)
+    // {
+    //     if($file) { return asset($file); }
+    // }
 
     /**
      * Scope model query.
@@ -104,7 +106,7 @@ class Invoice extends Model implements Auditable
             $endOfYear = Carbon::createFromDate($year)->endOfYear()->timestamp;
             $query->whereBetween('invoice_date', [$startOfYear, $endOfYear]);
         }
-        elseif(isset($request['shipment_type']))
+        if(isset($request['shipment_type']))
         {
             $query->where('shipment_type', $request['shipment_type']);
         }

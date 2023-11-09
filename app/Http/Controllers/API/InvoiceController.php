@@ -161,4 +161,26 @@ class InvoiceController extends BaseController
 
         return $this->sendResponse(['bulk' => $bulk, '1136' => $other], 'Invoice limit get successfully.');
     }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function upload(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), ['file' => 'required']);
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+            $file = $request->file;
+            $name = $file->getClientOriginalName();
+            $file->move(public_path('upload/images/invoice'), $name);
+            $path = public_path('upload/images/invoice/'.$name);
+            return $this->sendResponse($path, 'File upload successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
 }

@@ -89,5 +89,6 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group
         Route::patch('update/{invoice}',  'update'    );
         Route::delete('delete/{id}',      'destroy'   );
         Route::get('check-limit',         'checkLimit');
+        Route::post('upload',             'upload'    );
     });
 });
