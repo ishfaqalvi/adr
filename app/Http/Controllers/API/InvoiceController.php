@@ -177,7 +177,7 @@ class InvoiceController extends BaseController
             $file = $request->file;
             $name = $file->getClientOriginalName();
             $file->move(public_path('upload/images/invoice'), $name);
-            $path = public_path('upload/images/invoice/'.$name);
+            $path = asset('upload/images/invoice/'.$name);
             return $this->sendResponse($path, 'File upload successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

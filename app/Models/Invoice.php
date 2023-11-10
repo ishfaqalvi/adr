@@ -61,12 +61,12 @@ class Invoice extends Model implements Auditable
      */
     public function setFileAttribute($file)
     {
-        if ($value instanceof \Illuminate\Http\UploadedFile) {
-            $name = $value->getClientOriginalName();
-            $value->move(public_path('upload/images/invoice'), $name);
-            $this->attributes['file'] = public_path('upload/images/invoice/' . $name);
-        } elseif (is_string($value)) {
-            $this->attributes['file'] = $value;
+        if ($file instanceof \Illuminate\Http\UploadedFile) {
+            $name = $file->getClientOriginalName();
+            $file->move(public_path('upload/images/invoice'), $name);
+            $this->attributes['file'] = asset('upload/images/invoice/' . $name);
+        } elseif (is_string($file)) {
+            $this->attributes['file'] = $file;
         } else {
             unset($this->attributes['file']);
         }
