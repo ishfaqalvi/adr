@@ -104,4 +104,12 @@ class User extends Authenticatable implements Auditable
     {
         return $this->hasMany('App\Models\Invoice', 'user_id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function bookmarks()
+    {
+        return $this->hasMany('App\Models\Bookmark', 'user_id', 'id');
+    }
 }

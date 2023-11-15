@@ -91,4 +91,15 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group
         Route::get('check-limit',         'checkLimit');
         Route::post('upload',             'upload'    );
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bookmarks Route
+    |--------------------------------------------------------------------------
+    */
+    Route::controller(BookmarkController::class)->prefix('bookmarks')->group(function () {
+        Route::get('list',                'index'     );
+        Route::post('store',              'store'     );
+        Route::delete('delete/{id}',      'destroy'   );
+    });
 });
