@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Support\Facades\Hash;
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable implements Auditable, MustVerifyEmail
 {
     use \OwenIt\Auditing\Auditable;
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
@@ -79,6 +79,14 @@ class User extends Authenticatable implements Auditable
     public function getImageAttribute($image)
     {
         return asset($image);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function trial()
+    {
+        return $this->hasOne('App\Models\Trial', 'user_id', 'id');
     }
 
     /**

@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\OTPMail;
 use App\Models\Token;
+use App\Models\Trial;
 use App\Models\User;
+use Carbon\Carbon;
 use Auth;
+use DB;
 
 class AuthController extends BaseController
 {
@@ -30,8 +33,17 @@ class AuthController extends BaseController
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
             }
-            $user = User::create($request->all());
-            return $this->sendResponse($user, 'Your account has been created successfully.');
+            $input = $request->all();
+            $user = DB::transaction(function () use ($input) {
+                $user = User::create($input);
+                $otp = rand(100000, 999999);
+                Mail::to($input['email'])->send(new OTPMail($otp, 'Account Varification'));
+                Token::updateOrCreate(['email' => $input['email']], ['otp' => $otp]);
+                DB::commit();
+                return $user;
+            });
+            
+            return $this->sendResponse($user, 'Your account has been created successfully. Check your email for account verification.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -54,6 +66,16 @@ class AuthController extends BaseController
             }
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 $user = Auth::user();
+                if(empty($user->email_verified_at))
+                {
+                    return $this->sendError('Varification.', ['error' => 'Oops! your account is not varified.']);    
+                }
+                if(empty($user->trial)){
+                    $s_date = Carbon::today();
+                    $e_date = Carbon::today()->addDays(14);
+                    Trial::create(['user_id' => $user->id, 'start_date'=> $s_date, 'end_date'  => $e_date]);
+                }
+                $user->load('trial');
                 $user->token = $user->createToken("API TOKEN")->plainTextToken;
                 return $this->sendResponse($user, 'User login successfully.');
             } else {
@@ -123,7 +145,7 @@ class AuthController extends BaseController
                 return $this->sendError('Validation Error.', $validator->errors());
             }
             $otp = rand(100000, 999999);
-            Mail::to($request->email)->send(new OTPMail($otp));
+            Mail::to($request->email)->send(new OTPMail($otp,'Forgot Password'));
             Token::updateOrCreate(['email' => $request->email], ['otp' => $otp]);
             return $this->sendResponse('', 'Reset password OTP send to given email successfully.');
         } catch (\Throwable $th) {
@@ -178,6 +200,30 @@ class AuthController extends BaseController
             $user->update(['password' => $request->new_password]);
             Token::where('email',$request->email)->first()->delete();
             return $this->sendResponse('', 'Your password reset successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
+
+    /**
+     * Account varification api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function accountVarify(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|exists:users'
+            ]);
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+            $user = User::where('email', $request->email)->first();
+            $user->email_verified_at = now();
+            $user->save();
+            Token::where('email',$request->email)->first()->delete();
+            return $this->sendResponse('', 'Your account verified successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

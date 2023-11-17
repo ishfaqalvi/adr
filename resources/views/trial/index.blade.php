@@ -1,20 +1,20 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{modelTitle}}
+    Trial
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">{{modelTitle}} Managment</span>
+            Home - <span class="fw-normal">Trial Managment</span>
         </h4>
     </div>
-    @can('{{modelRoute}}-create')
+    @can('trials-create')
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('{{modelRoute}}.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('trials.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-plus"></i>
                 </span>
@@ -30,22 +30,30 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{modelTitle}}</h5>
+            <h5 class="mb-0">Trial</h5>
         </div>
         <table class="table datatable-basic">
             <thead class="thead">
                 <tr>
                     <th>No</th>
-                    {{tableHeader}}
+                    
+										<th>User Id</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach (${{modelNamePluralLowerCase}} as $key => ${{modelNameLowerCase}})
+            @foreach ($trials as $key => $trial)
                 <tr>
                     <td>{{ ++$key }}</td>
-                    {{tableBody}}
-                    <td class="text-center">@include('admin.{{modelView}}.actions')</td>
+                    
+											<td>{{ $trial->user_id }}</td>
+											<td>{{ $trial->start_date }}</td>
+											<td>{{ $trial->end_date }}</td>
+
+                    <td class="text-center">@include('admin.trial.actions')</td>
                 </tr>
             @endforeach
             </tbody>
@@ -53,27 +61,27 @@
     </div>
 </div>
 @endsection
-@canany(['{{modelRoute}}-view', '{{modelRoute}}-edit', '{{modelRoute}}-delete'])
+@canany(['trials-view', 'trials-edit', 'trials-delete'])
 <div class="d-inline-flex">
     <div class="dropdown">
         <a href="#" class="text-body" data-bs-toggle="dropdown">
             <i class="ph-list"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-end">
-            <form action="{{ route('{{modelRoute}}.destroy',${{modelNameLowerCase}}->id) }}" method="POST">
+            <form action="{{ route('trials.destroy',$trial->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                @can('{{modelRoute}}-view')
-                    <a href="{{ route('{{modelRoute}}.show',${{modelNameLowerCase}}->id) }}" class="dropdown-item">
+                @can('trials-view')
+                    <a href="{{ route('trials.show',$trial->id) }}" class="dropdown-item">
                         <i class="ph-eye me-2"></i>{{ __('Show') }}
                     </a>
                 @endcan
-                @can('{{modelRoute}}-edit')
-                    <a href="{{ route('{{modelRoute}}.edit',${{modelNameLowerCase}}->id) }}" class="dropdown-item">
+                @can('trials-edit')
+                    <a href="{{ route('trials.edit',$trial->id) }}" class="dropdown-item">
                         <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
                     </a>
                 @endcan
-                @can('{{modelRoute}}-delete')
+                @can('trials-delete')
                     <button type="submit" class="dropdown-item sa-confirm">
                         <i class="ph-trash me-2"></i>{{ __('Delete') }}
                     </button>
