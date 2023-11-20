@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property $id
  * @property $user_id
  * @property $name
- * @property $phone_number
+ * @property $city_postal_code
  * @property $address
  * @property $created_at
  * @property $updated_at
@@ -26,7 +26,7 @@ class Consignee extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id','name','phone_number','address'];
+    protected $fillable = ['user_id','name','city_postal_code','address'];
 
 
     /**

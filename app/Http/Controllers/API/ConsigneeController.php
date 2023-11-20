@@ -34,9 +34,9 @@ class ConsigneeController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name'         => 'required|string|max:50',
-                'phone_number' => 'required|string|max:20',
-                'address'      => 'required|string|max:256'
+                'name'             => 'required|string|max:50',
+                'city_postal_code' => 'required|string|max:20',
+                'address'          => 'required|string|max:256'
             ]);
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
@@ -59,9 +59,9 @@ class ConsigneeController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name'         => 'required|string|max:50',
-                'phone_number' => 'required|string|max:20',
-                'address'      => 'required|string|max:256'
+                'name'             => 'required|string|max:50',
+                'city_postal_code' => 'required|string|max:20',
+                'address'          => 'required|string|max:256'
             ]);
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
