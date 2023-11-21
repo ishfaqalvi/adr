@@ -26,7 +26,7 @@ class AuthController extends BaseController
         try {
             $validator = Validator::make($request->all(), [
                 'name'             => 'required|string|max:50',
-                'email'            => 'required|string|email|unique:users',
+                'email'            => 'required|string',
                 'password'         => 'required|min:8|max:16',
                 'confirm_password' => 'required|min:8|max:16|same:password',
             ]);
@@ -34,16 +34,28 @@ class AuthController extends BaseController
                 return $this->sendError('Validation Error.', $validator->errors());
             }
             $input = $request->all();
-            $user = DB::transaction(function () use ($input) {
-                $user = User::create($input);
+            $message = DB::transaction(function () use ($input) {
+                $checkUser = User::where('email',$input['email'])->first();
+                if ($checkUser) {
+                    if(!empty($checkUser->email_verified_at))
+                    {
+                        return $this->sendError('Validation Error.', ['error' => 'User already registerd against this email.']);    
+                    }else{
+                        $user = $checkUser;
+                        $message = 'Your account is already exist but not varified. Check your email for account verification.';
+                    }   
+                }else{
+                    $user = User::create($input);
+                    $message = 'Your account has been created successfully. Check your email for account verification.';
+                }
                 $otp = rand(100000, 999999);
                 Mail::to($input['email'])->send(new OTPMail($otp, 'Account Varification'));
                 Token::updateOrCreate(['email' => $input['email']], ['otp' => $otp]);
                 DB::commit();
-                return $user;
+                return $message;
             });
             
-            return $this->sendResponse($user, 'Your account has been created successfully. Check your email for account verification.');
+            return $this->sendResponse('', $message);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -175,6 +187,29 @@ class AuthController extends BaseController
                 return $this->sendResponse($data, 'OTP Verified successfully.');    
             }
             return $this->sendResponse($data, 'OTP Not Verified.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
+
+    /**
+     * Resend otp api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function resendOtp(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email|exists:users'
+            ]);
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+            $otp = rand(100000, 999999);
+            Mail::to($request->email)->send(new OTPMail($otp,'Account Varification'));
+            Token::updateOrCreate(['email' => $request->email], ['otp' => $otp]);
+            return $this->sendResponse('', 'OTP send successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
