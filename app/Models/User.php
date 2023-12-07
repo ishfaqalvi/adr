@@ -90,6 +90,14 @@ class User extends Authenticatable implements Auditable, MustVerifyEmail
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function subscription()
+    {
+        return $this->hasOne('App\Models\Subscription', 'email', 'email');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function packagings()

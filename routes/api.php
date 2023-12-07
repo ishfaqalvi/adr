@@ -32,6 +32,16 @@ Route::namespace('App\Http\Controllers\API')->group(function() {
     });
 });
 
+Route::middleware('subscription.api')->namespace('\App\Http\Controllers\API')->group(function () {
+    /*
+    |--------------------------------------------------------------------------
+    | Subscription Route
+    |--------------------------------------------------------------------------
+    */
+    Route::controller(AuthController::class)->prefix('auth')->group(function () {
+        Route::post('subscription',      'subscription');
+    });
+});
 Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group(function () {
     /*
     |--------------------------------------------------------------------------

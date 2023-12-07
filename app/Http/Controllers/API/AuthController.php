@@ -10,6 +10,7 @@ use App\Mail\OTPMail;
 use App\Models\Token;
 use App\Models\Trial;
 use App\Models\User;
+use App\Models\Subscription;
 use Carbon\Carbon;
 use Auth;
 use DB;
@@ -88,6 +89,7 @@ class AuthController extends BaseController
                     Trial::create(['user_id' => $user->id, 'start_date'=> $s_date, 'end_date'  => $e_date]);
                 }
                 $user->load('trial');
+                $user->load('subscription');
                 $user->token = $user->createToken("API TOKEN")->plainTextToken;
                 return $this->sendResponse($user, 'User login successfully.');
             } else {
@@ -286,6 +288,34 @@ class AuthController extends BaseController
         $user->tokens()->delete();
         $user->delete();
         return $this->sendResponse('', 'Your account removed successfully.');
+    }
+
+    /**
+     * Remove account api
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function subscription(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email'
+            ]);
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+            $email = $request->email;
+            $currentDate = Carbon::now();
+            $endDate = $currentDate->copy()->addYear();
+
+            $subscription = Subscription::updateOrCreate(
+                ['email' => $email],
+                ['start_date' => $currentDate, 'end_date' => $endDate]
+            );
+            return $this->sendResponse('', 'Subscription saved against this email successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
     }
 
     /**
