@@ -70,6 +70,26 @@
                 }
             }
         });
+        const dpAutoHideElementsd = document.querySelector('.start_date');
+        if(dpAutoHideElementsd) {
+            const dpAutoHide = new Datepicker(dpAutoHideElementsd, {
+                container: '.content-inner',
+                buttonClass: 'btn',
+                prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
+                nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
+                autohide: true
+            });
+        }
+        const dpAutoHideElemented = document.querySelector('.end_date');
+        if(dpAutoHideElemented) {
+            const dpAutoHide = new Datepicker(dpAutoHideElemented, {
+                container: '.content-inner',
+                buttonClass: 'btn',
+                prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
+                nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
+                autohide: true
+            });
+        }
     });
 </script>
 @endsection

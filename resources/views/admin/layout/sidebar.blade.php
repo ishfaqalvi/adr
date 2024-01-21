@@ -69,6 +69,14 @@
     </a>
 </li>
 @endcan
+@can('subscriptions-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('subscriptions*') ? 'active' : ''}}" href="{{ route('subscriptions.index') }}">
+        <i class="ph-package"></i>
+        <span>Subscriptions</span>
+    </a>
+</li>
+@endcan
 @canany(['notifications-list','audits-list', 'logs-list'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Configuration</div>

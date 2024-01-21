@@ -4,15 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Auther;
-use App\Models\Tool;
-use App\Models\Gallery;
-use App\Models\Language;
-use App\Models\JobApplication;
-use App\Models\Feedback;
-use App\Models\Comment;
-use App\Models\Page;
+use App\Models\{User,Chemical,Subscription,Invoice};
 
 class DashboardController extends Controller
 {
@@ -34,6 +26,12 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('admin.dashboard');
+        $data = [
+            'chemicals'   => Chemical::count(),
+            'users'       => User::count(),
+            'invoices'    => Invoice::count(),
+            'subscription'=> Subscription::count(),
+        ];
+        return view('admin.dashboard', compact('data'));
     }
 }

@@ -52,6 +52,12 @@ class PermissionSeeder extends Seeder
                   'invoices-edit', 
                   'invoices-delete',
 
+                  'subscriptions-list', 
+                  'subscriptions-view', 
+                  'subscriptions-create', 
+                  'subscriptions-edit', 
+                  'subscriptions-delete',
+
                   'notifications-list', 
                   'notifications-view', 
                   'notifications-create', 

@@ -11,18 +11,32 @@
             Home - <span class="fw-normal">Subscription Managment</span>
         </h4>
     </div>
-    @can('subscriptions-create')
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('subscriptions.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            @can('subscriptions-create')
+            <a href="{{ route('subscriptions.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill me-2">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-plus"></i>
                 </span>
                 Create New
             </a>
+            @endcan
+            @can('subscriptions-create')
+            <a href="#" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill me-2" data-bs-toggle="modal" data-bs-target="#import">
+                <span class="btn-labeled-icon bg-primary text-white rounded-pill">
+                    <i class="ph-microsoft-excel-logo"></i>
+                </span>
+                Import
+            </a>
+            <a href="{{ asset('sample.xlsx') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill" target="_blank">
+                <span class="btn-labeled-icon bg-primary text-white rounded-pill">
+                    <i class="ph-download-simple"></i>
+                </span>
+                Download Sample
+            </a>
+            @endcan
         </div>
     </div>
-    @endcan
 </div>
 @endsection
 
@@ -32,15 +46,20 @@
         <div class="card-header">
             <h5 class="mb-0">Subscription</h5>
         </div>
+        @if(isset($errors) && $errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </div>
+        @endif
         <table class="table datatable-basic">
             <thead class="thead">
                 <tr>
                     <th>No</th>
-                    
-										<th>Email</th>
-										<th>Start Date</th>
-										<th>End Date</th>
-
+					<th>Email</th>
+					<th>Start Date</th>
+					<th>End Date</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -48,11 +67,9 @@
             @foreach ($subscriptions as $key => $subscription)
                 <tr>
                     <td>{{ ++$key }}</td>
-                    
-											<td>{{ $subscription->email }}</td>
-											<td>{{ $subscription->start_date }}</td>
-											<td>{{ $subscription->end_date }}</td>
-
+					<td>{{ $subscription->email }}</td>
+					<td>{{ date('d M Y', $subscription->start_date) }}</td>
+					<td>{{ date('d M Y', $subscription->end_date) }}</td>
                     <td class="text-center">@include('admin.subscription.actions')</td>
                 </tr>
             @endforeach
@@ -60,37 +77,9 @@
         </table>
     </div>
 </div>
+@include('admin.subscription.import')
 @endsection
-@canany(['subscriptions-view', 'subscriptions-edit', 'subscriptions-delete'])
-<div class="d-inline-flex">
-    <div class="dropdown">
-        <a href="#" class="text-body" data-bs-toggle="dropdown">
-            <i class="ph-list"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end">
-            <form action="{{ route('subscriptions.destroy',$subscription->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                @can('subscriptions-view')
-                    <a href="{{ route('subscriptions.show',$subscription->id) }}" class="dropdown-item">
-                        <i class="ph-eye me-2"></i>{{ __('Show') }}
-                    </a>
-                @endcan
-                @can('subscriptions-edit')
-                    <a href="{{ route('subscriptions.edit',$subscription->id) }}" class="dropdown-item">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
-                    </a>
-                @endcan
-                @can('subscriptions-delete')
-                    <button type="submit" class="dropdown-item sa-confirm">
-                        <i class="ph-trash me-2"></i>{{ __('Delete') }}
-                    </button>
-                @endcan
-            </form>
-        </div>
-    </div>
-</div>
-@endcanany
+
 @section('script')
 <script>
     $(function () {

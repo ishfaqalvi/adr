@@ -18,6 +18,7 @@
 <!-- Theme JS files -->
 <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/tables/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/forms/wizards/steps.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/forms/validation/validate.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/notifications/sweet_alert.min.js') }}"></script>
@@ -25,23 +26,14 @@
 <script src="{{ asset('assets/js/vendor/forms/selects/bootstrap_multiselect.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/uploaders/dropzone.min.js') }}"></script>
 <script src="{{ asset('assets/demo/dropify/js/dropify.js') }}"></script>
-<!-- <script src="{{ asset('assets/js/vendor/visualization/d3/d3.min.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script> -->
+<script src="{{ asset('assets/js/vendor/pickers/datepicker.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/visualization/d3/d3.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/visualization/d3/d3_tooltip.js') }}"></script>
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/demo/pages/form_wizard.js') }}"></script>
 <script src="{{ asset('assets/demo/pages/datatables_basic.js') }}"></script>
-{{-- <script src="{{ asset('assets/demo/pages/form_select2.js') }}"></script> --}}
 <script src="{{ asset('assets/demo/pages/dashboard.js') }}"></script>
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/streamgraph.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/sparklines.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/lines.js') }}"></script>     -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/areas.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/donuts.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/bars.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/progress.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/heatmaps.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/pies.js') }}"></script> -->
-<!-- <script src="{{ asset('assets/demo/charts/pages/dashboard/bullets.js') }}"></script> -->
 <script>
     var NotyDemo = function() {
         const _componentNoty = function() {

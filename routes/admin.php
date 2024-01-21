@@ -98,6 +98,22 @@ Route::controller(InvoiceController::class)->prefix('invoices')->as('invoices.')
 
 /*
 |--------------------------------------------------------------------------
+| Subscriptions Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(SubscriptionController::class)->prefix('subscriptions')->as('subscriptions.')->group(function () {
+	Route::get('list',						'index'		)->name('index'	 );
+	Route::get('create',					'create'	)->name('create' );
+	Route::post('store',					'store'		)->name('store'	 );
+	Route::post('import', 					'import'	)->name('import' );
+	Route::get('edit/{id}',					'edit'		)->name('edit'	 );
+	Route::get('show/{id}',					'show'		)->name('show'	 );
+	Route::patch('update/{subscription}',	'update'	)->name('update' );
+	Route::delete('delete/{id}',			'destroy'	)->name('destroy');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Notifications Routes
 |--------------------------------------------------------------------------
 */
