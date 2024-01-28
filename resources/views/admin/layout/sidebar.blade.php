@@ -65,7 +65,7 @@
 <li class="nav-item">
     <a class="nav-link {{ request()->routeIs('invoices*') ? 'active' : ''}}" href="{{ route('invoices.index') }}">
         <i class="ph-notepad"></i>
-        <span>Invoices</span>
+        <span>Shipments</span>
     </a>
 </li>
 @endcan

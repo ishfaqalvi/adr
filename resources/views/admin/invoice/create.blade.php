@@ -1,14 +1,14 @@
 @extends('admin.layout.app')
 
 @section('title')
-{{ __('Create') }} Invoice
+{{ __('Create') }} Shipments
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Invoice Managment</span>
+            Home - <span class="fw-normal">Shipments Management</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
@@ -28,7 +28,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('Create') }} Invoice</h5>
+            <h5 class="mb-0">{{ __('Create') }} Shipments</h5>
         </div>
         <div class="card-body">
             <form method="POST" action="{{ route('invoices.store') }}" class="validate" role="form" enctype="multipart/form-data">

@@ -59,7 +59,7 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::create($request->all());
         return redirect()->route('invoices.index')
-            ->with('success', 'Invoice created successfully.');
+            ->with('success', 'Shipment created successfully.');
     }
 
     /**
@@ -100,7 +100,7 @@ class InvoiceController extends Controller
         $invoice->update($request->all());
 
         return redirect()->route('invoices.index')
-            ->with('success', 'Invoice updated successfully');
+            ->with('success', 'Shipment updated successfully');
     }
 
     /**
@@ -113,6 +113,6 @@ class InvoiceController extends Controller
         $invoice = Invoice::find($id)->delete();
 
         return redirect()->route('invoices.index')
-            ->with('success', 'Invoice deleted successfully');
+            ->with('success', 'Shipment deleted successfully');
     }
 }

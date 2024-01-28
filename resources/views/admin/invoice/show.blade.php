@@ -1,14 +1,14 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{ __('Show Invoice') }}
+    {{ __('Show Shipment') }}
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Invoice Managment</span>
+            Home - <span class="fw-normal">Shipment Management</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
@@ -28,7 +28,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('Show') }} Invoice</h5>
+            <h5 class="mb-0">{{ __('Show') }} Shipment</h5>
         </div>
         <div class="card-body">
             <div class="form-group mb-3">

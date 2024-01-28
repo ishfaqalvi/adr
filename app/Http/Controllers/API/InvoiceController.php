@@ -48,7 +48,7 @@ class InvoiceController extends BaseController
             }
             $data[] = $invoice;
         }
-        return $this->sendResponse($invoices, 'Invoice list get successfully.');
+        return $this->sendResponse($invoices, 'Shipments list get successfully.');
     }
 
     /**
@@ -78,7 +78,7 @@ class InvoiceController extends BaseController
             foreach($request->items as $item){
                 $invoice->invoiceItems()->create($item);
             }
-            return $this->sendResponse($invoice, 'Invoice created successfully.');
+            return $this->sendResponse($invoice, 'Shipment created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -94,7 +94,7 @@ class InvoiceController extends BaseController
     {
        $invoice = Invoice::with('consignee','user','invoiceItems.packaging','invoiceItems.chemical')->find($id);
 
-        return $this->sendResponse($invoice, 'Invoice detail get successfully.');
+        return $this->sendResponse($invoice, 'Shipment detail get successfully.');
     }
 
     /**
@@ -126,7 +126,7 @@ class InvoiceController extends BaseController
             foreach($request->items as $item){
                 $invoice->invoiceItems()->create($item);
             }
-            return $this->sendResponse($invoice, 'Invoice updated successfully.');
+            return $this->sendResponse($invoice, 'Shipment updated successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -142,7 +142,7 @@ class InvoiceController extends BaseController
         $invoice = Invoice::find($id);
         $invoice->invoiceItems()->delete();
         $invoice->delete();
-        return $this->sendResponse('', 'Invoice deleted successfully.');
+        return $this->sendResponse('', 'Shipment deleted successfully.');
     }
 
     /**
@@ -159,7 +159,7 @@ class InvoiceController extends BaseController
         $other['month']= Invoice::ownOther()->monthly()->count();
         $other['year'] = Invoice::ownOther()->yearly()->count(); 
 
-        return $this->sendResponse(['bulk' => $bulk, '1136' => $other], 'Invoice limit get successfully.');
+        return $this->sendResponse(['bulk' => $bulk, '1136' => $other], 'Shipment limit get successfully.');
     }
 
     /**

@@ -1,14 +1,14 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Invoice
+    Shipments
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Invoice Managment</span>
+            Home - <span class="fw-normal">Shipments Management</span>
         </h4>
     </div>
     @can('invoices-create')
@@ -30,7 +30,7 @@
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">Invoice</h5>
+            <h5 class="mb-0">Shipments</h5>
         </div>
         <table class="table datatable-basic">
             <thead class="thead">
@@ -39,7 +39,7 @@
 					<th>User</th>
 					<th>Consignee</th>
 					<th>Shipment Type</th>
-					<th>Invoice Date</th>
+					<th>Shipment Date</th>
 					<th>Total Points</th>
                     <th class="text-center">Actions</th>
                 </tr>

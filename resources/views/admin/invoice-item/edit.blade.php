@@ -1,4 +1,4 @@
-@extends('admin.layout.app')
+wsw@extends('admin.layout.app')
 
 @section('title')
     {{ __('Update') }} Invoice Item
@@ -8,7 +8,7 @@
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Invoice Item Managment</span>
+            Home - <span class="fw-normal">Invoice Item Management</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
