@@ -85,8 +85,9 @@ Route::middleware('auth:sanctum')->namespace('\App\Http\Controllers\API')->group
     |--------------------------------------------------------------------------
     */
     Route::controller(ChemicalController::class)->prefix('chemicals')->group(function () {
-        Route::get('list',              'index'  );
-        Route::get('show/{id}',         'show'   );
+        Route::get('list',                  'index'  );
+        Route::get('show/{id}',             'show'   );
+        Route::patch('update/{chemical}',   'update' );
     });
 
     /*

@@ -36,4 +36,21 @@ class ChemicalController extends BaseController
         $chemical = Chemical::find($id);
         return $this->sendResponse($chemical, 'Chemicals data get successfully.');
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Chemical $chemical
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Chemical $chemical)
+    {
+        try {
+            $chemical->update($request->all());
+            return $this->sendResponse($chemical, 'Chemical updated successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
 }
