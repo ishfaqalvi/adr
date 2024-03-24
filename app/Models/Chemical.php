@@ -79,6 +79,8 @@ class Chemical extends Model
     	'un_number',
     	'name_en',
     	'name_it',
+        'name_sw',
+        'name_sp',
     	'class',
     	'classification_code',
     	'packing_group',
@@ -149,10 +151,14 @@ class Chemical extends Model
     	{
     		$query->where('name_en', 'like', '%'.$request['name_en'].'%');
     	}
-    	elseif (isset($request['name_it']))
+    	elseif (isset($request['name_sp']))
     	{
-    		$query->where('name_it', 'like', '%'.$request['name_it'].'%');
+    		$query->where('name_sp', 'like', '%'.$request['name_sp'].'%');
     	}
+        elseif (isset($request['name_sw']))
+        {
+            $query->where('name_sw', 'like', '%'.$request['name_sw'].'%');
+        }
         return $query;
     }
 }

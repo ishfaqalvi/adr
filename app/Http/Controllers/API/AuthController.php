@@ -71,7 +71,7 @@ class AuthController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email'    => 'required|string|email|exists:users',
+                'email'    => 'required|string|email|exists:customers',
                 'password' => 'required|min:8|max:16'
             ]);
             if ($validator->fails()) {

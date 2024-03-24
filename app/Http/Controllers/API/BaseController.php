@@ -45,12 +45,12 @@ class BaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendException($errors)
+    public function sendException($error)
     {
         $response = [
             'success' => false,
             'message' => 'Exception occurred.',
-            'exception' => $errors
+            'exception' => $error
         ];
         return response()->json($response, 500);
     }
