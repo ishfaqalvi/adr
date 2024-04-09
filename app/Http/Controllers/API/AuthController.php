@@ -40,11 +40,11 @@ class AuthController extends BaseController
                 if ($checkUser) {
                     if(!empty($checkUser->email_verified_at))
                     {
-                        return $this->sendError('Validation Error.', ['error' => 'User already registerd against this email.']);    
+                        return $this->sendError('Validation Error.', ['error' => 'User already registerd against this email.']);
                     }else{
                         $user = $checkUser;
                         $message = 'Your account is already exist but not varified. Check your email for account verification.';
-                    }   
+                    }
                 }else{
                     $user = User::create($input);
                     $message = 'Your account has been created successfully. Check your email for account verification.';
@@ -55,7 +55,7 @@ class AuthController extends BaseController
                 DB::commit();
                 return $message;
             });
-            
+
             return $this->sendResponse('', $message);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -71,7 +71,7 @@ class AuthController extends BaseController
     {
         try {
             $validator = Validator::make($request->all(), [
-                'email'    => 'required|string|email|exists:customers',
+                'email'    => 'required|string|email|exists:users',
                 'password' => 'required|min:8|max:16'
             ]);
             if ($validator->fails()) {
@@ -81,7 +81,7 @@ class AuthController extends BaseController
                 $user = Auth::user();
                 if(empty($user->email_verified_at))
                 {
-                    return $this->sendError('Varification.', ['error' => 'Oops! your account is not varified.']);    
+                    return $this->sendError('Varification.', ['error' => 'Oops! your account is not varified.']);
                 }
                 if(empty($user->trial)){
                     $s_date = Carbon::today();
@@ -186,7 +186,7 @@ class AuthController extends BaseController
             $data = false;
             if ($savedOTP && $savedOTP == $request->otp) {
                 $data = true;
-                return $this->sendResponse($data, 'OTP Verified successfully.');    
+                return $this->sendResponse($data, 'OTP Verified successfully.');
             }
             return $this->sendResponse($data, 'OTP Not Verified.');
         } catch (\Throwable $th) {
@@ -327,7 +327,7 @@ class AuthController extends BaseController
     {
         $user = Null;
         if ($email = $request->email) {
-            $user = User::where('email', $email)->first();    
+            $user = User::where('email', $email)->first();
         }
         if (empty($user)) {
             return $this->sendError('Record Not Found.', ['No record found against this email!']);
